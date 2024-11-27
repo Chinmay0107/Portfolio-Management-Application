@@ -6,6 +6,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 from scipy.optimize import minimize
 
+st.set_page_config(page_title="Portfolio Management", layout="wide")
+
 st.markdown(
     """
     <style>
@@ -16,7 +18,7 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
-st.set_page_config(page_title="Portfolio Management", layout="wide")
+
 def calculate_portfolio_metrics(returns, weights):
     """
     Calculate portfolio metrics: return, volatility, and Sharpe ratio.
