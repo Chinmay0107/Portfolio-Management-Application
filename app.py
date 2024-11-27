@@ -6,19 +6,17 @@ import plotly.express as px
 import plotly.graph_objects as go
 from scipy.optimize import minimize
 
-# Page Configuration
+st.markdown(
+    """
+    <style>
+    .css-1e5imcs {background-color: #0E1117;}
+    .css-1d391kg {background-color: #161A22;}
+    .css-18ni7ap {color: #FFFFFF;}
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 st.set_page_config(page_title="Portfolio Management", layout="wide")
-
-
-import streamlit as st
-import pandas as pd
-import numpy as np
-import yfinance as yf
-import plotly.express as px
-import plotly.graph_objects as go
-from scipy.optimize import minimize
-
-# Function to calculate portfolio metrics
 def calculate_portfolio_metrics(returns, weights):
     """
     Calculate portfolio metrics: return, volatility, and Sharpe ratio.
@@ -53,7 +51,7 @@ def optimize_portfolio(returns):
     constraints = ({'type': 'eq', 'fun': lambda weights: np.sum(weights) - 1})
     bounds = tuple((0, 1) for asset in range(num_assets))
 
-    # Define the objective function to maximize the Sharpe ratio
+    #function to maximize the Sharpe ratio
     def objective_function(weights):
         portfolio_return, portfolio_volatility = calculate_portfolio_metrics(returns, weights)
         sharpe_ratio = calculate_sharpe_ratio(portfolio_return, portfolio_volatility, risk_free_rate=0)
@@ -67,8 +65,6 @@ def optimize_portfolio(returns):
         constraints=constraints
     )
     return result.x
-
-
 # Welcome Page
 st.title("📊 Portfolio Management Application")
 st.markdown("""
@@ -76,14 +72,12 @@ st.markdown("""
 This interactive tool helps you create and optimize a portfolio or analyze an existing one.
 """)
 st.write("💡 _“Investing is about managing risk, not avoiding it.”_")
-
 # Navigation Buttons
 action = st.radio(
     "What would you like to do today?",
     ("Create an Optimal Portfolio", "Analyze My Existing Portfolio"),
     index=0
 )
-
 # --- Create an Optimal Portfolio ---
 if action == "Create an Optimal Portfolio":
     st.subheader("Create an Optimal Portfolio")
@@ -98,18 +92,14 @@ if action == "Create an Optimal Portfolio":
     if st.button("Run Optimization"):
         tickers = [ticker.strip().upper() for ticker in stocks.split(",")]
         try:
-            # Fetch historical data and calculate daily returns
             historical_data = yf.download(tickers, period=lookback_period)["Adj Close"].dropna()
             daily_returns = historical_data.pct_change().dropna()
 
-            # Calculate optimal weights
             optimal_weights = optimize_portfolio(daily_returns)
 
-            # Calculate optimal portfolio metrics
             optimal_return, optimal_volatility = calculate_portfolio_metrics(daily_returns, optimal_weights)
             sharpe_ratio = calculate_sharpe_ratio(optimal_return, optimal_volatility, risk_free_rate)
 
-            # Convert optimal return and volatility to percentages
             optimal_return_percentage = optimal_return * 100
             optimal_volatility_percentage = optimal_volatility * 100
 
