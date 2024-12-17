@@ -8,6 +8,48 @@ from scipy.optimize import minimize
 
 st.set_page_config(page_title="Portfolio Management", layout="wide")
 
+
+# Force Dark Theme using Custom CSS
+st.markdown(
+    """
+    <style>
+    /* Force background and text colors */
+    body, .stApp {
+        background-color: #0E1117 !important; /* Dark background */
+        color: #FFFFFF !important; /* Light text color */
+    }
+    /* Sidebar */
+    .css-1d391kg { /* Streamlit sidebar */
+        background-color: #161A22 !important;
+    }
+    /* Text Inputs, Buttons, and Select Boxes */
+    .stTextInput, .stNumberInput, .stSelectbox, .stButton {
+        background-color: #1E1E2E !important;
+        color: #FFFFFF !important;
+        border: 1px solid #444 !important;
+    }
+    /* DataFrame Styling */
+    .dataframe {
+        background-color: #1E1E2E !important;
+        color: #FFFFFF !important;
+    }
+    /* Header and Titles */
+    h1, h2, h3, h4, h5, h6 {
+        color: #FFFFFF !important;
+    }
+    /* Metric Containers */
+    .stMetric {
+        color: #FFFFFF !important;
+    }
+    /* Plotly Charts */
+    .js-plotly-plot {
+        background-color: #0E1117 !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 st.markdown(
     """
     <style>
